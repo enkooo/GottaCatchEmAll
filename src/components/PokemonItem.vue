@@ -8,7 +8,10 @@ const props = defineProps({
 	name: String,
 	imageUrl: String,
 	abilities: Array,
+	isRemovable: Boolean,
 });
+
+const emit = defineEmits(['pokemonSave']);
 
 const abilitiesDetails = ref([]);
 
@@ -34,6 +37,14 @@ watch(
 		await fetchAllAbilities();
 	}
 );
+
+const handlePokemonSave = () => {
+	emit('pokemonSave', props.name);
+};
+
+const handlePokemonRemove = () => {
+	emit('pokemonRemove', props.name);
+};
 </script>
 
 <template>
@@ -49,7 +60,16 @@ watch(
 				</li>
 			</ul>
 		</div>
-		<button class="bg-blue-600 text-white px-4 py-1 rounded-2xl hover:bg-blue-800">Save in Pokedex</button>
+		<button
+			v-if="!isRemovable"
+			class="bg-blue-600 text-white px-4 py-1 rounded-2xl hover:bg-blue-800"
+			@click="handlePokemonSave"
+		>
+			Save in Pokedex
+		</button>
+		<button v-else class="bg-blue-600 text-white px-4 py-1 rounded-2xl hover:bg-blue-800" @click="handlePokemonRemove">
+			Remove from Pokedex
+		</button>
 	</div>
 </template>
 

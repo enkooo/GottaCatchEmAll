@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import { useAxios } from '../composables/useAxios';
-import SearchInput from './SearchInput.vue';
-import PokemonItem from './PokemonItem.vue';
-import Loader from './Loader.vue';
+import SearchInput from '../components/SearchInput.vue';
+import PokemonItem from '../components/PokemonItem.vue';
+import Loader from '../components/Loader.vue';
 
 const searchQuery = ref('');
 const pokemonData = ref(null);
@@ -63,10 +63,16 @@ const fetchAllPokemonData = async (evolutionNames) => {
 
 	allPokemonData.value = await Promise.all(pokemonPromises);
 };
+
+const handlePokemonSave = (name) => {
+	const pokemonList = JSON.parse(localStorage.getItem('pokemonList')) ?? [];
+	pokemonList.push(name);
+	localStorage.setItem('pokemonList', JSON.stringify(pokemonList));
+};
 </script>
 
 <template>
-	<div class="flex flex-col justify-center items-center h-screen">
+	<div class="flex flex-col justify-center items-center">
 		<h1 class="font-bold text-3xl m-5">Gotta Catch 'em All!</h1>
 		<div class="flex gap-1">
 			<SearchInput @queryChange="handleSearchQueryChange" class="w-96" @keyup.enter="fetchPokemonData" />
@@ -93,6 +99,7 @@ const fetchAllPokemonData = async (evolutionNames) => {
 						:name="pokemon.name"
 						:imageUrl="pokemon.sprites.front_default"
 						:abilities="pokemon.abilities"
+						@pokemon-save="handlePokemonSave"
 					/>
 				</div>
 			</div>
