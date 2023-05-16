@@ -3,6 +3,7 @@ import { ref, onMounted, watch } from 'vue';
 import SearchInput from '../components/SearchInput.vue';
 import { useAxios } from '../composables/useAxios';
 import PokemonItem from '../components/PokemonItem.vue';
+import { toastState } from '../stores/toastStore';
 
 const { isLoading, hasError, fetchData } = useAxios();
 const allPokemonData = ref([]);
@@ -36,6 +37,12 @@ const handlePokemonRemove = async (name) => {
 	localStorage.setItem('pokemonList', JSON.stringify(updatedPokemonList));
 
 	await fetchAllPokemonData(updatedPokemonList);
+
+	toastState.items.unshift({
+		key: Symbol(),
+		message: 'Pokemon has been removed from your Pokedex!',
+		type: 'success',
+	});
 };
 
 const handleFilterPokemonList = () => {
@@ -57,6 +64,7 @@ watch([allPokemonData, searchQuery], handleFilterPokemonList);
 		<div class="min-h-[400px] flex justify-center items-center">
 			<div v-if="!allPokemonData.length && !isLoading && !hasError" class="self-start mt-10">
 				<p>Your pokedex is empty.</p>
+				<p>Search for a pokemon and add it to your pokedex.</p>
 			</div>
 
 			<div v-if="!filteredPokemonList.length && allPokemonData.length" class="self-start mt-10">

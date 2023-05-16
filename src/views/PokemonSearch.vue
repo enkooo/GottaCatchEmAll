@@ -4,6 +4,7 @@ import { useAxios } from '../composables/useAxios';
 import SearchInput from '../components/SearchInput.vue';
 import PokemonItem from '../components/PokemonItem.vue';
 import Loader from '../components/Loader.vue';
+import { toastState } from '../stores/toastStore';
 
 const searchQuery = ref('');
 const pokemonData = ref(null);
@@ -66,8 +67,24 @@ const fetchAllPokemonData = async (evolutionNames) => {
 
 const handlePokemonSave = (name) => {
 	const pokemonList = JSON.parse(localStorage.getItem('pokemonList')) ?? [];
+
+	if (pokemonList.includes(name)) {
+		toastState.items.unshift({
+			key: Symbol(),
+			message: 'Pokemon is already in your Pokedex!',
+			type: 'error',
+		});
+		return;
+	}
+
 	pokemonList.push(name);
 	localStorage.setItem('pokemonList', JSON.stringify(pokemonList));
+
+	toastState.items.unshift({
+		key: Symbol(),
+		message: 'Pokemon has been added to your Pokedex!',
+		type: 'success',
+	});
 };
 </script>
 
