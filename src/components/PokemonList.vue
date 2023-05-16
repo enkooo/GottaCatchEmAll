@@ -70,7 +70,9 @@ const fetchAllPokemonData = async (evolutionNames) => {
 		<h1 class="font-bold text-3xl m-5">Gotta Catch 'em All!</h1>
 		<div class="flex gap-1">
 			<SearchInput @queryChange="handleSearchQueryChange" class="w-96" @keyup.enter="fetchPokemonData" />
-			<button class="bg-blue-600 rounded-md px-12 py-2 text-white" @click="fetchPokemonData">Search</button>
+			<button class="bg-blue-600 rounded-md px-12 py-2 text-white hover:bg-blue-800" @click="fetchPokemonData">
+				Search
+			</button>
 		</div>
 		<div class="min-h-[400px] flex justify-center items-center">
 			<div v-if="!allPokemonData.length && !isLoading && !hasError" class="self-start mt-10">
