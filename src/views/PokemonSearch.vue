@@ -93,7 +93,10 @@ const handlePokemonSave = (name) => {
 		<h1 class="font-bold text-3xl m-5">Gotta Catch 'em All!</h1>
 		<div class="flex gap-1">
 			<SearchInput @queryChange="handleSearchQueryChange" class="w-96" @keyup.enter="fetchPokemonData" />
-			<button class="bg-blue-600 rounded-md px-12 py-2 text-white hover:bg-blue-800" @click="fetchPokemonData">
+			<button
+				class="bg-blue-600 rounded-md px-12 py-2 text-white hover:bg-blue-800 hidden md:block"
+				@click="fetchPokemonData"
+			>
 				Search
 			</button>
 		</div>
@@ -110,7 +113,7 @@ const handlePokemonSave = (name) => {
 			</div>
 
 			<div v-else-if="allPokemonData.length">
-				<div class="flex gap-10">
+				<div class="flex gap-10 flex-wrap justify-center my-5 max-w-7xl">
 					<PokemonItem
 						v-for="pokemon in allPokemonData"
 						:name="pokemon.name"

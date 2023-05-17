@@ -62,12 +62,16 @@ const handlePokemonRemove = () => {
 		</div>
 		<button
 			v-if="!isRemovable"
-			class="bg-blue-600 text-white px-4 py-1 rounded-2xl hover:bg-blue-800"
+			class="bg-blue-600 text-white px-4 py-1 rounded-2xl hover:bg-blue-800 mt-auto"
 			@click="handlePokemonSave"
 		>
 			Save in Pokedex
 		</button>
-		<button v-else class="bg-blue-600 text-white px-4 py-1 rounded-2xl hover:bg-blue-800" @click="handlePokemonRemove">
+		<button
+			v-else
+			class="bg-blue-600 text-white px-4 py-1 rounded-2xl hover:bg-blue-800 mt-auto"
+			@click="handlePokemonRemove"
+		>
 			Remove from Pokedex
 		</button>
 	</div>

@@ -78,7 +78,7 @@ watch([allPokemonData, searchQuery], handleFilterPokemonList);
 			</div>
 
 			<div v-else-if="filteredPokemonList.length">
-				<div class="flex gap-10 flex-wrap justify-center mt-5 max-w-7xl">
+				<div class="flex gap-10 flex-wrap justify-center my-5 max-w-7xl">
 					<PokemonItem
 						v-for="pokemon in filteredPokemonList"
 						:name="pokemon.name"
